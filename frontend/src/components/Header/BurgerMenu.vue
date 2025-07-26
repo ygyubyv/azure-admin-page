@@ -30,12 +30,14 @@
           <BaseBurgerButton
             :icon="['fas', 'right-to-bracket']"
             text="Login"
+            :onClick="login"
             v-if="!isAuthenticated"
           />
 
           <BaseBurgerButton
             :icon="['fas', 'right-to-bracket']"
             text="Logout"
+            :onClick="logout"
             v-else
           />
         </ul>
@@ -46,8 +48,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { isAuthenticated } from "@/data/auth";
+import { useAuthStore } from "@/stores/useAuthStore";
+import { storeToRefs } from "pinia";
 import BaseBurgerButton from "../Base/BaseBurgerButton.vue";
+
+const { isAuthenticated } = storeToRefs(useAuthStore());
+const { login, logout } = useAuthStore();
 
 const menuOpen = ref(false);
 const toggleMenu = () => {

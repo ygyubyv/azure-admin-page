@@ -14,20 +14,38 @@
     />
 
     <BaseButton
+      text="Get token"
+      :icon="['fas', 'square-binary']"
+      :onClick="getAccessToken"
+    />
+
+    <BaseButton
       text="Login"
       :icon="['fas', 'right-to-bracket']"
-      :onClick="onLogin"
+      :onClick="login"
+      v-if="!isAuthenticated"
+    />
+
+    <BaseButton
+      text="Logout"
+      :icon="['fas', 'right-to-bracket']"
+      :onClick="logout"
+      v-else
     />
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/stores/useAuthStore";
 import BaseButton from "../Base/BaseButton.vue";
+
+const authStore = useAuthStore();
+
+const { isAuthenticated } = storeToRefs(authStore);
+const { login, logout, getAccessToken } = authStore;
+
 const onHelp = () => {
   console.log("Help");
-};
-
-const onLogin = () => {
-  console.log("Login");
 };
 </script>

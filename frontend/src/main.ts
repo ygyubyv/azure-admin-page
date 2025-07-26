@@ -3,15 +3,21 @@ import "./assets/main.css";
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { FontAwesomeIcon } from "./plugins/fontAwesome.ts";
+import { myMSALObj } from "@/azure/msalConfig.ts";
 
 import App from "./App.vue";
 import router from "./router";
 
-const app = createApp(App);
+(async () => {
+  await myMSALObj.initialize();
 
-app.component("font-awesome-icon", FontAwesomeIcon);
+  const app = createApp(App);
+  const pinia = createPinia();
 
-app.use(createPinia());
-app.use(router);
+  app.component("font-awesome-icon", FontAwesomeIcon);
 
-app.mount("#app");
+  app.use(pinia);
+  app.use(router);
+
+  app.mount("#app");
+})();
