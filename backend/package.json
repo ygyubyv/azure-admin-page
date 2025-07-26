@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "azure-admin-page",
   "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
@@ -12,7 +12,8 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
-    "@azure/functions": "^4.0.0"
+    "@azure/functions": "^4.0.0",
+    "axios": "^1.10.0"
   },
   "devDependencies": {
     "azure-functions-core-tools": "^4.x",
