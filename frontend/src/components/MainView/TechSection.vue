@@ -1,8 +1,6 @@
 <template>
   <section>
-    <h2 class="text-2xl font-semibold mb-6 text-gray-800">
-      Використані технології
-    </h2>
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Technologies used</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
       <TechCard v-for="tech in technologies" :tech="tech" :id="tech.name" />
     </div>

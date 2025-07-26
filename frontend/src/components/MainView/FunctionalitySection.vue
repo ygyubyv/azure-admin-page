@@ -1,29 +1,31 @@
 <template>
   <BaseSection>
-    <h2 class="text-2xl font-semibold text-gray-800">Основний функціонал</h2>
-    <ul class="list-disc list-inside space-y-2">
+    <h2 class="text-lg md:text-2xl font-bold text-gray-900">
+      Core Functionality
+    </h2>
+
+    <ul class="list-disc list-inside space-y-2 text-[16px] md:text-base">
       <li>
-        Перегляд авторизованих користувачів, їхніх ролей та видалення
-        користувачів за допомогою
-        <strong>Microsoft Graph API</strong>.
+        View authorized users, manage their roles, or remove users with lower
+        privileges using the <strong>Microsoft Graph API</strong>.
       </li>
       <li>
-        Призначення ролей:
+        Role assignment options include:
         <strong class="text-gray-900">Manager</strong>,
         <strong class="text-gray-900">Moderator</strong>,
         <strong class="text-gray-900">Admin</strong>.
       </li>
       <li>
-        <strong>Адміністратори</strong> мають можливість призначати Manager та
-        Moderator, видаляти користувачів що не є адміністраторами
+        <strong>Administrators</strong> can assign the Manager and Moderator
+        roles, and remove users who have lower roles than theirs.
       </li>
       <li>
-        <strong>Власники (owner)</strong> мають повний доступ до системи,
-        зокрема можливість призначення та видалення адміністраторів.
+        <strong>Owners</strong> have full access to the system, including the
+        ability to assign or remove any role, including administrators.
       </li>
       <li>
-        Веб додаток передбачає захищення маршрутів на основі ролей що приходять
-        з токену
+        The web application includes route protection based on roles retrieved
+        from the token.
       </li>
     </ul>
   </BaseSection>

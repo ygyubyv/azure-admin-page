@@ -1,5 +1,10 @@
 <template>
-  <div class="flex items-center gap-4 bg-gray-100 p-6 rounded-lg shadow-md">
+  <a
+    :href="tech.docsUrl"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex items-center gap-4 bg-gray-100 p-6 rounded-lg shadow-md transition transform hover:shadow-lg hover:scale-[1.02] active:scale-[0.98]"
+  >
     <img
       :src="tech.imageUrl"
       :alt="tech.name"
@@ -8,7 +13,7 @@
     <span class="text-gray-900 font-semibold text-lg">
       {{ tech.name }}
     </span>
-  </div>
+  </a>
 </template>
 
 <script setup lang="ts">

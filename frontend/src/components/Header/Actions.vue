@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import BaseButton from "../Base/BaseButton.vue";
 const onHelp = () => {
-  console.log("Hepl");
+  console.log("Help");
 };
 
 const onLogin = () => {

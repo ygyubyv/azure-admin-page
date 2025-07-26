@@ -4,7 +4,13 @@
       <div class="flex h-16 justify-between items-center">
         <Logo />
 
-        <Actions />
+        <div class="block md:hidden">
+          <BurgerMenu />
+        </div>
+
+        <div class="hidden md:block">
+          <Actions />
+        </div>
       </div>
     </div>
   </header>
@@ -13,4 +19,5 @@
 <script setup lang="ts">
 import Logo from "./Logo.vue";
 import Actions from "./Actions.vue";
+import BurgerMenu from "./BurgerMenu.vue";
 </script>

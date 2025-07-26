@@ -3,12 +3,21 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import {
   faRightToBracket,
-  faUserShield,
   faLightbulb,
+  faUserTie,
+  faXmark,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
-library.add(faRightToBracket, faUserShield, faLightbulb, faGithub);
+library.add(
+  faRightToBracket,
+  faLightbulb,
+  faGithub,
+  faUserTie,
+  faXmark,
+  faBars
+);
 
 export { FontAwesomeIcon };
