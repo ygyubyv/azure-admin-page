@@ -1,8 +1,9 @@
 import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Main from "../views/Main.vue";
-import { storeToRefs } from "pinia";
+import Admin from "@/views/Admin.vue";
 
 export const isLoading = ref(false);
 
@@ -13,6 +14,14 @@ const router = createRouter({
       path: "/",
       name: "main",
       component: Main,
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      component: Admin,
+      meta: {
+        requiresAuth: true,
+      },
     },
   ],
 });
@@ -28,8 +37,8 @@ router.beforeEach(async (to, from, next) => {
     await initAuth();
   }
 
-  if (to.meta.requiresAuth && isAuthenticated.value) {
-    return;
+  if (to.meta.requiresAuth && !isAuthenticated.value) {
+    next({ name: "main" });
   }
 
   isLoading.value = false;

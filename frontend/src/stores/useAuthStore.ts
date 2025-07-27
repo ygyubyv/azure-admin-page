@@ -1,10 +1,29 @@
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import { loginRequest, myMSALObj } from "@/azure/msalConfig";
+import { parseRolesFromString } from "@/helpers/roleConverters";
+
+interface IdTokenClaims {
+  aud: string;
+  auth_time: number;
+  exp: number;
+  extension_AzureAdminPageRole: string;
+  iat: number;
+  iss: string;
+  nbf: number;
+  nonce: string;
+  sub: string;
+}
 
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref(false);
   const isInitialized = ref(false);
+  const userRolesString = ref("");
+  const idToken = ref("");
+
+  const userRolesArray = computed(() => {
+    return parseRolesFromString(userRolesString.value);
+  });
 
   const login = async () => {
     try {
@@ -52,10 +71,22 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const setTokenData = async () => {
+    const token = await getAccessToken();
+    if (!token) {
+      return;
+    }
+    const idTokenClaims = token.idTokenClaims as IdTokenClaims;
+
+    userRolesString.value = idTokenClaims.extension_AzureAdminPageRole;
+    idToken.value = token.idToken;
+  };
+
   const getAccessToken = async () => {
     try {
       const response = await myMSALObj.acquireTokenSilent(loginRequest);
       console.log(response);
+      return response;
     } catch (error) {
       console.error(error);
     }
@@ -64,9 +95,13 @@ export const useAuthStore = defineStore("auth", () => {
   return {
     isAuthenticated,
     isInitialized,
+    userRolesString,
+    userRolesArray,
+    idToken,
     login,
     logout,
     initAuth,
     getAccessToken,
+    setTokenData,
   };
 });

@@ -18,7 +18,7 @@
         <ul class="space-y-2">
           <router-link
             @click="toggleMenu"
-            :to="{ name: 'main' }"
+            :to="{ name: 'admin' }"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
             <span>Admin</span>

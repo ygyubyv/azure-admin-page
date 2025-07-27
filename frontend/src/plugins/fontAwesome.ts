@@ -8,6 +8,11 @@ import {
   faXmark,
   faBars,
   faSquareBinary,
+  faTrash,
+  faCheck,
+  faFlask,
+  faChartLine,
+  faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -19,7 +24,12 @@ library.add(
   faUserTie,
   faXmark,
   faBars,
-  faSquareBinary
+  faSquareBinary,
+  faTrash,
+  faCheck,
+  faFlask,
+  faChartLine,
+  faUserShield
 );
 
 export { FontAwesomeIcon };
