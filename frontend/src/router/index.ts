@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Main from "../views/Main.vue";
 import Admin from "@/views/Admin.vue";
+import Users from "@/views/Users.vue";
 
 export const isLoading = ref(false);
 
@@ -14,6 +15,14 @@ const router = createRouter({
       path: "/",
       name: "main",
       component: Main,
+    },
+    {
+      path: "/users",
+      name: "users",
+      component: Users,
+      meta: {
+        requiresAuth: true,
+      },
     },
     {
       path: "/admin",

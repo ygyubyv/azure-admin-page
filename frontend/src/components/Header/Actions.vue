@@ -1,6 +1,13 @@
 <template>
   <div class="flex items-center gap-4">
     <RouterLink
+      to="/users"
+      class="text-lg mr-3 text-gray-800 hover:text-gray-600 transition duration-200"
+    >
+      Users
+    </RouterLink>
+
+    <RouterLink
       to="/admin"
       class="text-lg mr-3 text-gray-800 hover:text-gray-600 transition duration-200"
     >

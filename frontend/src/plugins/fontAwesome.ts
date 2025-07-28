@@ -14,6 +14,7 @@ import {
   faChartLine,
   faUserShield,
   faSearch,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -31,7 +32,8 @@ library.add(
   faFlask,
   faChartLine,
   faUserShield,
-  faSearch
+  faSearch,
+  faUsers
 );
 
 export { FontAwesomeIcon };

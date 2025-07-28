@@ -1,4 +1,4 @@
-export interface User {
+export type User = {
   id: string;
   displayName?: string | null;
   jobTitle?: string | null;
@@ -8,4 +8,4 @@ export interface User {
   onPremisesSyncEnabled?: boolean;
   preferredLanguage?: string | null;
   role: string;
-}
+};

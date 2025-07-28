@@ -25,6 +25,15 @@
             <font-awesome-icon :icon="['fas', 'user-tie']" />
           </router-link>
 
+          <router-link
+            @click="toggleMenu"
+            :to="{ name: 'users' }"
+            class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
+          >
+            <span>Users</span>
+            <font-awesome-icon :icon="['fas', 'users']" />
+          </router-link>
+
           <BaseBurgerButton :icon="['fas', 'lightbulb']" text="Help" />
 
           <BaseBurgerButton
