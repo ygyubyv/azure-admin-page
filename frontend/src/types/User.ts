@@ -1,4 +1,9 @@
-export type User = {
+export interface User {
   id: string;
-  extension_AzureAdminPageRole: string;
-};
+  displayName?: string | null;
+  userPrincipalName: string;
+  mail?: string | null;
+  givenName?: string | null;
+  surname?: string | null;
+  role: string;
+}

@@ -72,20 +72,24 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const setTokenData = async () => {
-    const token = await getAccessToken();
+    if (userRolesString.value && idToken.value) {
+      return;
+    }
+
+    const token = await getMsalToken();
     if (!token) {
       return;
     }
+
     const idTokenClaims = token.idTokenClaims as IdTokenClaims;
 
     userRolesString.value = idTokenClaims.extension_AzureAdminPageRole;
     idToken.value = token.idToken;
   };
 
-  const getAccessToken = async () => {
+  const getMsalToken = async () => {
     try {
       const response = await myMSALObj.acquireTokenSilent(loginRequest);
-      console.log(response);
       return response;
     } catch (error) {
       console.error(error);
@@ -101,7 +105,7 @@ export const useAuthStore = defineStore("auth", () => {
     login,
     logout,
     initAuth,
-    getAccessToken,
+    getMsalToken,
     setTokenData,
   };
 });

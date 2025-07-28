@@ -16,7 +16,7 @@
     <BaseButton
       text="Get token"
       :icon="['fas', 'square-binary']"
-      :onClick="getAccessToken"
+      :onClick="getMsalToken"
     />
 
     <BaseButton
@@ -43,7 +43,7 @@ import BaseButton from "../Base/BaseButton.vue";
 const authStore = useAuthStore();
 
 const { isAuthenticated } = storeToRefs(authStore);
-const { login, logout, getAccessToken } = authStore;
+const { login, logout, getMsalToken } = authStore;
 
 const onHelp = () => {
   console.log("Help");

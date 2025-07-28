@@ -1,15 +1,80 @@
 <template>
-  <div
-    class="max-w-5xl mx-auto md:my-12 p-6 bg-gray-50 rounded-xl shadow-md font-sans"
-  >
-    <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center">
-      Authentication Panel
-    </h2>
+  <div class="w-full max-w-3xl mx-auto my-10 space-y-6 px-4">
+    <div class="flex gap-2">
+      <input
+        v-model="searchId"
+        type="text"
+        placeholder="Enter user ID"
+        class="w-full max-w-xs sm:max-w-full rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent text-sm sm:text-base"
+      />
+      <BaseButton
+        text="Search"
+        size="small"
+        :icon="['fas', 'search']"
+        @click="searchUser"
+      />
+    </div>
 
-    <UsersList />
+    <div v-if="!user && !isLoading" class="text-gray-500 text-center py-10">
+      No user selected
+    </div>
+
+    <div v-if="isLoading" class="text-center py-10">
+      <BaseSpinner mode="Black-spinner" />
+    </div>
+
+    <UserCard v-if="user" :user="user" />
   </div>
 </template>
 
 <script setup lang="ts">
-import UsersList from "@/components/AdminView/UsersList.vue";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "@/stores/useAuthStore";
+import type { User } from "@/types/User";
+import BaseButton from "@/components/Base/BaseButton.vue";
+import BaseSpinner from "@/components/Base/BaseSpinner.vue";
+import UserCard from "@/components/AdminView/UserCard.vue";
+
+interface ResponseData {
+  user: User;
+}
+
+const { setTokenData } = useAuthStore();
+const { idToken } = storeToRefs(useAuthStore());
+
+const searchId = ref("");
+const user = ref<User | null>(null);
+const isLoading = ref(false);
+
+const searchUser = async () => {
+  user.value = null;
+
+  if (!searchId.value) {
+    return;
+  }
+
+  getUser(searchId.value);
+
+  searchId.value = "";
+};
+
+const getUser = async (id: string) => {
+  try {
+    isLoading.value = true;
+    await setTokenData();
+    const response = await fetch(`http://localhost:7071/api/users/${id}`, {
+      headers: {
+        Authorization: `Bearer ${idToken.value}`,
+      },
+    });
+
+    const data = (await response.json()) as ResponseData;
+    user.value = data.user;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
+  }
+};
 </script>
