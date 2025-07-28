@@ -91,8 +91,6 @@ interface Props {
 
 const { user } = defineProps<Props>();
 
-console.log(user);
-
 const targetRolesArray = parseRolesFromString(user.role);
 
 const newRoles = ref([...targetRolesArray]);

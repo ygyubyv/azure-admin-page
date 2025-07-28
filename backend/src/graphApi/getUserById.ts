@@ -1,18 +1,7 @@
 import axios from "axios";
 import { getAccessToken } from "./getAccessToken";
 import { getFormatedExtension } from "../utils/getFormatedExtension";
-
-interface User {
-  id: string;
-  displayName?: string;
-  jobTitle?: string;
-  department?: string;
-  createdDateTime?: string;
-  accountEnabled?: boolean;
-  onPremisesSyncEnabled?: boolean;
-  preferredLanguage?: string;
-  role?: string;
-}
+import { User } from "../types/User";
 
 export const getUserById = async (userId: string): Promise<User | null> => {
   const accessToken = await getAccessToken();
