@@ -5,19 +5,21 @@ import { getFormatedExtension } from "../utils/getFormatedExtension";
 interface User {
   id: string;
   displayName?: string;
-  userPrincipalName: string;
-  mail?: string;
-  givenName?: string;
-  surname?: string;
+  jobTitle?: string;
+  department?: string;
+  createdDateTime?: string;
+  accountEnabled?: boolean;
+  onPremisesSyncEnabled?: boolean;
+  preferredLanguage?: string;
   role?: string;
 }
 
-export const getUserById = async (userId: string): Promise<User> => {
+export const getUserById = async (userId: string): Promise<User | null> => {
   const accessToken = await getAccessToken();
 
   const roleExtension = getFormatedExtension("AzureAdminPageRole");
 
-  const url = `https://graph.microsoft.com/v1.0/users/${userId}?$select=id,displayName,userPrincipalName,mail,givenName,surname,${roleExtension}`;
+  const url = `https://graph.microsoft.com/v1.0/users/${userId}?$select=id,displayName,jobTitle,department,createdDateTime,accountEnabled,onPremisesSyncEnabled,preferredLanguage,${roleExtension}`;
 
   try {
     const response = await axios.get(url, {
@@ -31,10 +33,12 @@ export const getUserById = async (userId: string): Promise<User> => {
     const user: User = {
       id: data.id,
       displayName: data.displayName,
-      userPrincipalName: data.userPrincipalName,
-      mail: data.mail,
-      givenName: data.givenName,
-      surname: data.surname,
+      jobTitle: data.jobTitle,
+      department: data.department,
+      createdDateTime: data.createdDateTime,
+      accountEnabled: data.accountEnabled,
+      onPremisesSyncEnabled: data.onPremisesSyncEnabled,
+      preferredLanguage: data.preferredLanguage,
       role: data[roleExtension] || "",
     };
 

@@ -1,9 +1,11 @@
 export interface User {
   id: string;
   displayName?: string | null;
-  userPrincipalName: string;
-  mail?: string | null;
-  givenName?: string | null;
-  surname?: string | null;
+  jobTitle?: string | null;
+  department?: string | null;
+  createdDateTime?: string | null;
+  accountEnabled?: boolean;
+  onPremisesSyncEnabled?: boolean;
+  preferredLanguage?: string | null;
   role: string;
 }

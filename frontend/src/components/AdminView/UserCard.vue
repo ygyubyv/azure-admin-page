@@ -7,14 +7,26 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
         <InfoItem label="ID" :value="user.id" />
         <InfoItem label="Display Name" :value="user.displayName" />
-        <InfoItem label="UPN" :value="user.userPrincipalName" />
-        <InfoItem label="Mail" :value="user.mail" />
-        <InfoItem label="Given Name" :value="user.givenName" />
-        <InfoItem label="Surname" :value="user.surname" />
+        <InfoItem label="Job Title" :value="user.jobTitle" />
+        <InfoItem label="Department" :value="user.department" />
+        <InfoItem
+          v-if="user.createdDateTime"
+          label="Created"
+          :value="normalizeDate(user.createdDateTime)"
+        />
+        <InfoItem
+          label="Account Enabled"
+          :value="user.accountEnabled ? 'Yes' : 'No'"
+        />
+        <InfoItem
+          label="Synced from On-Prem?"
+          :value="user.onPremisesSyncEnabled ? 'Yes' : 'No'"
+        />
+        <InfoItem label="Preferred Language" :value="user.preferredLanguage" />
+        <InfoItem label="Roles" :value="user.role" />
       </div>
     </div>
 
-    <!-- Role Checkboxes -->
     <div>
       <h4 class="text-md font-semibold text-gray-700 mb-2">Roles</h4>
       <div class="flex gap-4 flex-wrap">
@@ -46,7 +58,6 @@
       </div>
     </div>
 
-    <!-- Buttons -->
     <div class="flex gap-2 mt-4">
       <BaseButton
         text="Submit"
@@ -67,17 +78,20 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import { parseRolesFromString } from "@/helpers/roleConverters";
+import { showNotification } from "@/helpers/showNotification";
+import { normalizeDate } from "@/helpers/normilizeDate";
 import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
 import BaseCheckbox from "@/components/Base/BaseCheckbox.vue";
 import InfoItem from "@/components/AdminView/InfoItem.vue";
-import { showNotification } from "@/helpers/showNotification";
 
 interface Props {
   user: User;
 }
 
 const { user } = defineProps<Props>();
+
+console.log(user);
 
 const targetRolesArray = parseRolesFromString(user.role);
 
