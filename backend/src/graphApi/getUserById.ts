@@ -19,23 +19,31 @@ export const getUserById = async (userId: string): Promise<User> => {
 
   const url = `https://graph.microsoft.com/v1.0/users/${userId}?$select=id,displayName,userPrincipalName,mail,givenName,surname,${roleExtension}`;
 
-  const response = await axios.get(url, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
-  const data = response.data;
+    const data = response.data;
 
-  const user: User = {
-    id: data.id,
-    displayName: data.displayName,
-    userPrincipalName: data.userPrincipalName,
-    mail: data.mail,
-    givenName: data.givenName,
-    surname: data.surname,
-    role: data[roleExtension] || "",
-  };
+    const user: User = {
+      id: data.id,
+      displayName: data.displayName,
+      userPrincipalName: data.userPrincipalName,
+      mail: data.mail,
+      givenName: data.givenName,
+      surname: data.surname,
+      role: data[roleExtension] || "",
+    };
 
-  return user;
+    return user;
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      return null;
+    }
+
+    throw error;
+  }
 };

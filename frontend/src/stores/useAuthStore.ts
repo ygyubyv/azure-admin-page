@@ -2,6 +2,7 @@ import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import { loginRequest, myMSALObj } from "@/azure/msalConfig";
 import { parseRolesFromString } from "@/helpers/roleConverters";
+import { showNotification } from "@/helpers/showNotification";
 
 interface IdTokenClaims {
   aud: string;
@@ -28,24 +29,26 @@ export const useAuthStore = defineStore("auth", () => {
   const login = async () => {
     try {
       if (!myMSALObj) {
-        throw new Error("MSAL не ініціалізовано");
+        throw new Error("MSAL is not initialized");
       }
       await myMSALObj.loginRedirect(loginRequest);
     } catch (error) {
-      console.error("Помилка входу", error);
+      showNotification("error", "Login failed");
+      console.error("Login error", error);
     }
   };
 
   const logout = async () => {
     try {
       if (!myMSALObj) {
-        throw new Error("MSAL не ініціалізовано");
+        throw new Error("MSAL is not initialized");
       }
       isAuthenticated.value = false;
       isInitialized.value = false;
       await myMSALObj.logoutRedirect();
     } catch (error) {
-      console.error("Помилка виходу", error);
+      showNotification("error", "Logout failed");
+      console.error("Logout error", error);
     }
   };
 
@@ -66,7 +69,8 @@ export const useAuthStore = defineStore("auth", () => {
         isAuthenticated.value = false;
       }
     } catch (error) {
-      console.error("Помилка авторизації, спробуйте ще раз:", error);
+      showNotification("error", "Authentication error, please try again");
+      console.error("Auth init error", error);
       isAuthenticated.value = false;
     }
   };
@@ -78,6 +82,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const token = await getMsalToken();
     if (!token) {
+      showNotification("error", "Failed to get token");
       return;
     }
 
@@ -92,7 +97,8 @@ export const useAuthStore = defineStore("auth", () => {
       const response = await myMSALObj.acquireTokenSilent(loginRequest);
       return response;
     } catch (error) {
-      console.error(error);
+      showNotification("error", "Token acquisition failed");
+      console.error("Token error", error);
     }
   };
 

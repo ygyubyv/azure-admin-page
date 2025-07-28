@@ -71,6 +71,7 @@ import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
 import BaseCheckbox from "@/components/Base/BaseCheckbox.vue";
 import InfoItem from "@/components/AdminView/InfoItem.vue";
+import { showNotification } from "@/helpers/showNotification";
 
 interface Props {
   user: User;
@@ -96,7 +97,7 @@ const hasChanges = computed(() => {
 
 const onSubmit = () => {
   if (!hasChanges.value) {
-    console.log("No changes detected");
+    showNotification("warning", "No changes detected");
     return;
   }
 

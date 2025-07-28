@@ -35,6 +35,8 @@ import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
 import BaseSpinner from "@/components/Base/BaseSpinner.vue";
 import UserCard from "@/components/AdminView/UserCard.vue";
+import { showErrorCodeMessage } from "@/helpers/showErrorCodeMessage";
+import { showNotification } from "@/helpers/showNotification";
 
 interface ResponseData {
   user: User;
@@ -69,10 +71,16 @@ const getUser = async (id: string) => {
       },
     });
 
+    if (!response.ok) {
+      showErrorCodeMessage(response.status);
+      return;
+    }
+
     const data = (await response.json()) as ResponseData;
     user.value = data.user;
   } catch (error) {
-    console.error(error);
+    console.error("Unexpected client-side error:", error);
+    showNotification("error", "Unexpected error. Please check the console.");
   } finally {
     isLoading.value = false;
   }
