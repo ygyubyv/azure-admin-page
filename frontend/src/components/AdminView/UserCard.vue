@@ -76,54 +76,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
-import { parseRolesFromString } from "@/helpers/roleConverters";
-import { showNotification } from "@/helpers/showNotification";
 import { normalizeDate } from "@/helpers/normilizeDate";
-import { useAuthStore } from "@/stores/useAuthStore";
+import { useAdminPanel } from "@/composables/useAdminPanel";
 import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
 import BaseCheckbox from "@/components/Base/BaseCheckbox.vue";
 import InfoItem from "@/components/AdminView/InfoItem.vue";
-import { storeToRefs } from "pinia";
 
 interface Props {
   user: User;
 }
 
 const { user } = defineProps<Props>();
-const { bearerToken } = storeToRefs(useAuthStore());
-
-const targetRolesArray = parseRolesFromString(user.role);
-
-const newRoles = ref([...targetRolesArray]);
-
-const isUser = computed(() => {
-  return user.role.includes("user");
-});
-
-const isOwner = computed(() => {
-  return user.role.includes("owner");
-});
-
-const hasChanges = computed(() => {
-  return JSON.stringify(newRoles.value) !== JSON.stringify(targetRolesArray);
-});
-
-const onSubmit = () => {
-  if (!hasChanges.value) {
-    showNotification("warning", "No changes detected");
-    return;
-  }
-
-  try {
-    console.log("On submit");
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const onDelete = () => {
-  console.log("Delete");
-};
+const { newRoles, isUser, isOwner, onSubmit, onDelete } = useAdminPanel(user);
 </script>
