@@ -80,16 +80,19 @@ import { computed, ref } from "vue";
 import { parseRolesFromString } from "@/helpers/roleConverters";
 import { showNotification } from "@/helpers/showNotification";
 import { normalizeDate } from "@/helpers/normilizeDate";
+import { useAuthStore } from "@/stores/useAuthStore";
 import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
 import BaseCheckbox from "@/components/Base/BaseCheckbox.vue";
 import InfoItem from "@/components/AdminView/InfoItem.vue";
+import { storeToRefs } from "pinia";
 
 interface Props {
   user: User;
 }
 
 const { user } = defineProps<Props>();
+const { bearerToken } = storeToRefs(useAuthStore());
 
 const targetRolesArray = parseRolesFromString(user.role);
 

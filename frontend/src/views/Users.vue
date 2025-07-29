@@ -31,7 +31,9 @@ const isLoading = ref(false);
 const fetchUsers = async () => {
   try {
     isLoading.value = true;
-    const response = await fetch("http://localhost:7071/api/users");
+    const response = await fetch(
+      "https://azure-admin-page.azurewebsites.net/api/users"
+    );
 
     if (!response.ok) {
       showNotification("error", "Failed to fetch users");

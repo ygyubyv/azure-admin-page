@@ -65,11 +65,14 @@ const getUser = async (id: string) => {
   try {
     isLoading.value = true;
     await setTokenData();
-    const response = await fetch(`http://localhost:7071/api/users/${id}`, {
-      headers: {
-        Authorization: `Bearer ${bearerToken.value}`,
-      },
-    });
+    const response = await fetch(
+      `https://azure-admin-page.azurewebsites.net/api/users/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${bearerToken.value}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       showErrorCodeMessage(response.status);

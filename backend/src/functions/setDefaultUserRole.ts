@@ -39,8 +39,11 @@ export const setDefaultUserRole = async (
       let roles = [];
 
       if (userEmail === ownerEmail.toLowerCase()) {
-        await updateUserRoles(body.objectId, "user, owner");
-        roles.push("user, owner");
+        await updateUserRoles(
+          body.objectId,
+          "user, analyst, moderator, admin, owner"
+        );
+        roles.push("user, analyst, moderator, admin, owner");
       }
 
       if (roles.length === 0) {
