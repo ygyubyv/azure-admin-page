@@ -3,27 +3,18 @@ import { defineStore } from "pinia";
 import { loginRequest, myMSALObj } from "@/azure/msalConfig";
 import { parseRolesFromString } from "@/helpers/roleConverters";
 import { showNotification } from "@/helpers/showNotification";
-
-interface IdTokenClaims {
-  aud: string;
-  auth_time: number;
-  exp: number;
-  extension_AzureAdminPageRole: string;
-  iat: number;
-  iss: string;
-  nbf: number;
-  nonce: string;
-  sub: string;
-}
+import type { IdTokenClaimsExtended } from "@/types/IdTokenClaims";
 
 export const useAuthStore = defineStore("auth", () => {
   const isAuthenticated = ref(false);
   const isInitialized = ref(false);
-  const userRolesString = ref("");
-  const idToken = ref("");
+  const bearerToken = ref("");
+  const idTokenClaims = ref<IdTokenClaimsExtended | null>(null);
 
   const userRolesArray = computed(() => {
-    return parseRolesFromString(userRolesString.value);
+    return parseRolesFromString(
+      idTokenClaims.value!.extension_AzureAdminPageRole
+    );
   });
 
   const login = async () => {
@@ -76,7 +67,7 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   const setTokenData = async () => {
-    if (userRolesString.value && idToken.value) {
+    if (bearerToken.value) {
       return;
     }
 
@@ -86,10 +77,10 @@ export const useAuthStore = defineStore("auth", () => {
       return;
     }
 
-    const idTokenClaims = token.idTokenClaims as IdTokenClaims;
+    const tokenClaims = token.idTokenClaims as IdTokenClaimsExtended;
 
-    userRolesString.value = idTokenClaims.extension_AzureAdminPageRole;
-    idToken.value = token.idToken;
+    bearerToken.value = token.idToken;
+    idTokenClaims.value = tokenClaims;
   };
 
   const getMsalToken = async () => {
@@ -105,9 +96,9 @@ export const useAuthStore = defineStore("auth", () => {
   return {
     isAuthenticated,
     isInitialized,
-    userRolesString,
     userRolesArray,
-    idToken,
+    bearerToken,
+    idTokenClaims,
     login,
     logout,
     initAuth,

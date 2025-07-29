@@ -5,6 +5,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import Main from "../views/Main.vue";
 import Admin from "@/views/Admin.vue";
 import Users from "@/views/Users.vue";
+import Me from "@/views/Me.vue";
 
 export const isLoading = ref(false);
 
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/users",
       name: "users",
       component: Users,
+    },
+    {
+      path: "/me",
+      name: "me",
+      component: Me,
       meta: {
         requiresAuth: true,
       },

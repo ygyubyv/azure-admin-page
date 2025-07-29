@@ -43,7 +43,7 @@ interface ResponseData {
 }
 
 const { setTokenData } = useAuthStore();
-const { idToken } = storeToRefs(useAuthStore());
+const { bearerToken } = storeToRefs(useAuthStore());
 
 const searchId = ref("");
 const user = ref<User | null>(null);
@@ -67,7 +67,7 @@ const getUser = async (id: string) => {
     await setTokenData();
     const response = await fetch(`http://localhost:7071/api/users/${id}`, {
       headers: {
-        Authorization: `Bearer ${idToken.value}`,
+        Authorization: `Bearer ${bearerToken.value}`,
       },
     });
 

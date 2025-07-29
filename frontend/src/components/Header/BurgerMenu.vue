@@ -18,11 +18,11 @@
         <ul class="space-y-2">
           <router-link
             @click="toggleMenu"
-            :to="{ name: 'admin' }"
+            :to="{ name: 'me' }"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
-            <span>Admin</span>
-            <font-awesome-icon :icon="['fas', 'user-tie']" />
+            <span>Me</span>
+            <font-awesome-icon :icon="['fas', 'address-card']" />
           </router-link>
 
           <router-link
@@ -32,6 +32,15 @@
           >
             <span>Users</span>
             <font-awesome-icon :icon="['fas', 'users']" />
+          </router-link>
+
+          <router-link
+            @click="toggleMenu"
+            :to="{ name: 'admin' }"
+            class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
+          >
+            <span>Admin</span>
+            <font-awesome-icon :icon="['fas', 'user-tie']" />
           </router-link>
 
           <BaseBurgerButton :icon="['fas', 'lightbulb']" text="Help" />
