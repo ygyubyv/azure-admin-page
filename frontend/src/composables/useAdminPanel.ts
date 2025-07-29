@@ -32,7 +32,7 @@ export const useAdminPanel = (user: User) => {
 
     try {
       const response = await fetch(
-        `http://localhost:7071/api/users/${user.id}/roles`,
+        `https://azure-admin-page.azurewebsites.net/api/users/${user.id}/roles`,
         {
           method: "POST",
           headers: {
@@ -61,7 +61,7 @@ export const useAdminPanel = (user: User) => {
   const onDelete = async () => {
     try {
       const response = await fetch(
-        `http://localhost:7071/api/users/${user.id}`,
+        `https://azure-admin-page.azurewebsites.net/api/users/${user.id}`,
         {
           method: "DELETE",
           headers: {
