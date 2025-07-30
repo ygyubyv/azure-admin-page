@@ -6,16 +6,33 @@ import {
 } from "@azure/functions";
 import { addUserToDatabase } from "../mongodb/addUserToDatabase";
 import { User } from "../types/User";
+import { getRoles } from "../utils/getRoles";
+import { checkBasicAuth } from "../auth/checkBasicAuth";
+
+type CreateUserResponseBody = {
+  email?: string;
+  client_id?: string;
+  [key: string]: any;
+};
 
 export const createUserHandler = async (
   request: HttpRequest,
   context: InvocationContext
 ): Promise<HttpResponseInit> => {
+  if (!checkBasicAuth(request)) {
+    context.error("Unauthorized");
+    return {
+      status: 401,
+      headers: { "WWW-Authenticate": "Basic" },
+      jsonBody: { error: "Unauthorized" },
+    };
+  }
+
   try {
-    const body = (await request.json()) as User;
+    const body = (await request.json()) as CreateUserResponseBody;
 
     const userData: User = {
-      id: body.id,
+      id: body.client_id,
       displayName: body.displayName ?? null,
       jobTitle: body.jobTitle ?? null,
       department: body.department ?? null,
@@ -23,7 +40,7 @@ export const createUserHandler = async (
       accountEnabled: body.accountEnabled ?? false,
       onPremisesSyncEnabled: body.onPremisesSyncEnabled ?? false,
       preferredLanguage: body.preferredLanguage ?? null,
-      role: body.role,
+      role: getRoles(body.email),
     };
 
     await addUserToDatabase(userData);
