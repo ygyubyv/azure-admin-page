@@ -3,7 +3,9 @@ import { OWNER } from "../config";
 const { email: OWNER_EMAIL } = OWNER;
 
 export const getRoles = (email: string) => {
-  const isOwner = email === OWNER_EMAIL;
+  if (email === OWNER_EMAIL) {
+    return "user, analyst, moderator, admin, owner";
+  }
 
-  return isOwner ? "user, analyst, moderator, admin, owner" : "user";
+  return "user";
 };

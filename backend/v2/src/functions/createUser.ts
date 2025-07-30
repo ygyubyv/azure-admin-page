@@ -4,14 +4,14 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { addUserToDatabase } from "../mongodb/addUserToDatabase";
 import { User } from "../types/User";
 import { getRoles } from "../utils/getRoles";
 import { checkBasicAuth } from "../auth/checkBasicAuth";
+import { addUser } from "../services/userService";
 
 type CreateUserResponseBody = {
-  email?: string;
-  client_id?: string;
+  email: string;
+  objectId: string;
   [key: string]: any;
 };
 
@@ -32,7 +32,7 @@ export const createUserHandler = async (
     const body = (await request.json()) as CreateUserResponseBody;
 
     const userData: User = {
-      id: body.client_id,
+      id: body.objectId,
       displayName: body.displayName ?? null,
       jobTitle: body.jobTitle ?? null,
       department: body.department ?? null,
@@ -43,7 +43,7 @@ export const createUserHandler = async (
       role: getRoles(body.email),
     };
 
-    await addUserToDatabase(userData);
+    await addUser(userData);
 
     return {
       status: 200,

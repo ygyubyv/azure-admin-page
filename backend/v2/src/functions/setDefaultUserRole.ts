@@ -4,12 +4,15 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { getUserRoleById } from "../mongodb/getUserRoleById";
 import { getFormatedExtension } from "../utils/getFormatedExtension";
 import { checkBasicAuth } from "../auth/checkBasicAuth";
+import { addUser, getUserById } from "../services/userService";
+import { getRoles } from "../utils/getRoles";
 
 interface AssignRoleRequestBody {
-  client_id?: string;
+  email: string;
+  objectId: string;
+  [key: string]: any;
 }
 
 export const setDefaultUserRoleHandler = async (
@@ -27,27 +30,43 @@ export const setDefaultUserRoleHandler = async (
 
   try {
     const body = (await request.json()) as AssignRoleRequestBody;
-    const clientId = body.client_id;
+    const objectId = body.objectId;
 
-    if (!clientId) {
+    const user = await getUserById(objectId);
+
+    if (!user) {
+      const roles = getRoles(body.email);
+
+      const user = {
+        id: body.objectId,
+        displayName: body.displayName ?? null,
+        jobTitle: body.jobTitle ?? null,
+        department: body.department ?? null,
+        createdDateTime: body.createdDateTime ?? null,
+        accountEnabled: body.accountEnabled ?? false,
+        onPremisesSyncEnabled: body.onPremisesSyncEnabled ?? false,
+        preferredLanguage: body.preferredLanguage ?? null,
+        role: roles,
+      };
+
+      await addUser(user);
+
       return {
-        status: 400,
+        status: 200,
         jsonBody: {
           version: "1.0.0",
-          status: 400,
-          message: "Missing client_id in query",
+          action: "Continue",
+          [getFormatedExtension("AzureAdminPageRole")]: roles,
         },
       };
     }
-
-    const role = await getUserRoleById(clientId);
 
     return {
       status: 200,
       jsonBody: {
         version: "1.0.0",
         action: "Continue",
-        [getFormatedExtension("AzureAdminPageRole")]: role,
+        [getFormatedExtension("AzureAdminPageRole")]: user.role,
       },
     };
   } catch (err: any) {
