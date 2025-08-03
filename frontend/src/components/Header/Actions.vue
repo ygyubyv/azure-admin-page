@@ -17,7 +17,7 @@
 
     <RouterLink
       :to="{ name: 'admin' }"
-      v-if="isAuthenticated"
+      v-if="isAdmin || isOwner"
       class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
       Admin
@@ -51,5 +51,5 @@ import BaseButton from "../Base/BaseButton.vue";
 const authStore = useAuthStore();
 
 const { login, logout } = authStore;
-const { isAuthenticated } = storeToRefs(authStore);
+const { isAuthenticated, isAdmin, isOwner } = storeToRefs(authStore);
 </script>

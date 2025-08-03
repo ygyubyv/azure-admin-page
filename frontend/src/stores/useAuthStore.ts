@@ -12,6 +12,10 @@ export const useAuthStore = defineStore("auth", () => {
   const idTokenClaims = ref<IdTokenClaimsExtended | null>(null);
 
   const userRolesArray = computed(() => {
+    if (!idTokenClaims.value) {
+      return "";
+    }
+
     return parseRolesFromString(
       idTokenClaims.value!.extension_AzureAdminPageRole
     );
@@ -64,6 +68,7 @@ export const useAuthStore = defineStore("auth", () => {
       if (accounts.length > 0) {
         myMSALObj.setActiveAccount(accounts[0]);
         isAuthenticated.value = true;
+        setTokenData();
       } else {
         isAuthenticated.value = false;
       }

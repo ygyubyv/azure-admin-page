@@ -37,6 +37,7 @@
           <router-link
             @click="toggleMenu"
             :to="{ name: 'admin' }"
+            v-if="isAdmin || isOwner"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
             <span>Admin</span>
@@ -77,7 +78,7 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { storeToRefs } from "pinia";
 import BaseBurgerButton from "../Base/BaseBurgerButton.vue";
 
-const { isAuthenticated } = storeToRefs(useAuthStore());
+const { isAuthenticated, isAdmin, isOwner } = storeToRefs(useAuthStore());
 const { login, logout } = useAuthStore();
 
 const menuOpen = ref(false);
