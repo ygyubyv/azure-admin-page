@@ -43,7 +43,14 @@
             <font-awesome-icon :icon="['fas', 'user-tie']" />
           </router-link>
 
-          <BaseBurgerButton :icon="['fas', 'lightbulb']" text="Help" />
+          <router-link
+            @click="toggleMenu"
+            :to="{ name: 'howToUse' }"
+            class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
+          >
+            <span>How to use</span>
+            <font-awesome-icon :icon="['fas', 'lightbulb']" />
+          </router-link>
 
           <BaseBurgerButton
             :icon="['fas', 'right-to-bracket']"

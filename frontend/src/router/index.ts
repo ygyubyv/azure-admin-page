@@ -7,6 +7,7 @@ import Main from "../views/Main.vue";
 import Admin from "@/views/Admin.vue";
 import Users from "@/views/Users.vue";
 import Me from "@/views/Me.vue";
+import HowToUse from "@/components/HowToUse/HowToUse.vue";
 
 export const isLoading = ref(false);
 
@@ -17,6 +18,11 @@ const router = createRouter({
       path: "/",
       name: "main",
       component: Main,
+    },
+    {
+      path: "/how-to-use",
+      name: "howToUse",
+      component: HowToUse,
     },
     {
       path: "/users",
