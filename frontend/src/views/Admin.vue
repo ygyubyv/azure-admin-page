@@ -42,7 +42,6 @@ interface ResponseData {
   user: User;
 }
 
-const { setTokenData } = useAuthStore();
 const { bearerToken } = storeToRefs(useAuthStore());
 
 const searchId = ref("");
@@ -64,7 +63,6 @@ const searchUser = async () => {
 const getUser = async (id: string) => {
   try {
     isLoading.value = true;
-    await setTokenData();
     const response = await fetch(
       `https://azure-admin-page.azurewebsites.net/api/users/${id}`,
       {

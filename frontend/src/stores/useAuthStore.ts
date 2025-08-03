@@ -17,6 +17,14 @@ export const useAuthStore = defineStore("auth", () => {
     );
   });
 
+  const isAdmin = computed(() => {
+    return userRolesArray.value.includes("admin");
+  });
+
+  const isOwner = computed(() => {
+    return userRolesArray.value.includes("owner");
+  });
+
   const login = async () => {
     try {
       if (!myMSALObj) {
@@ -99,6 +107,8 @@ export const useAuthStore = defineStore("auth", () => {
     userRolesArray,
     bearerToken,
     idTokenClaims,
+    isAdmin,
+    isOwner,
     login,
     logout,
     initAuth,

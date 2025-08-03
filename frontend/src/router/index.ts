@@ -2,6 +2,7 @@ import { ref } from "vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
+
 import Main from "../views/Main.vue";
 import Admin from "@/views/Admin.vue";
 import Users from "@/views/Users.vue";
@@ -35,30 +36,43 @@ const router = createRouter({
       name: "admin",
       component: Admin,
       meta: {
-        requiresAuth: true,
+        requiresAdmin: true,
       },
     },
   ],
 });
 
-router.beforeEach(async (to, from, next) => {
-  const authStore = useAuthStore();
-  const { initAuth } = authStore;
-  const { isAuthenticated, isInitialized } = storeToRefs(authStore);
+router.beforeEach(async (to, _, next) => {
+  try {
+    const authStore = useAuthStore();
+    const { initAuth, setTokenData } = authStore;
+    const { isAuthenticated, isInitialized, idTokenClaims, isAdmin, isOwner } =
+      storeToRefs(authStore);
 
-  isLoading.value = true;
+    isLoading.value = true;
 
-  if (!isInitialized.value) {
-    await initAuth();
+    if (!isInitialized.value) {
+      await initAuth();
+    }
+
+    if (to.meta.requiresAuth && !isAuthenticated.value) {
+      return next({ name: "main" });
+    }
+
+    if (to.meta.requiresAdmin && !idTokenClaims.value) {
+      await setTokenData();
+
+      if (!isAdmin.value && !isOwner.value) {
+        return next({ name: "main" });
+      }
+    }
+
+    next();
+  } catch (error) {
+    console.error(error);
+  } finally {
+    isLoading.value = false;
   }
-
-  if (to.meta.requiresAuth && !isAuthenticated.value) {
-    next({ name: "main" });
-  }
-
-  isLoading.value = false;
-
-  next();
 });
 
 export default router;
