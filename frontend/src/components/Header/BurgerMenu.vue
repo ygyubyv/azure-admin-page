@@ -58,7 +58,7 @@
               @click="selectIsOpen = !selectIsOpen"
               class="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-white/10 transition"
             >
-              <span>{{ localeNameToUpperCase(selectedLocale) }}</span>
+              <span>{{ $t(`locales.${selectedLocale}`) }}</span>
               <font-awesome-icon :icon="['fas', 'chevron-down']" />
             </button>
             <div
@@ -71,7 +71,7 @@
                 @click="selectLocale(locale)"
                 class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
               >
-                {{ localeNameToUpperCase(locale) }}
+                {{ $t(`locales.${locale}`) }}
               </div>
             </div>
           </li>
@@ -104,13 +104,8 @@ import BaseBurgerButton from "../Base/BaseBurgerButton.vue";
 
 const { isAuthenticated, isAdmin, isOwner } = storeToRefs(useAuthStore());
 const { login, logout } = useAuthStore();
-const {
-  availableLocales,
-  selectedLocale,
-  selectIsOpen,
-  localeNameToUpperCase,
-  selectLocale,
-} = useLocal();
+const { availableLocales, selectedLocale, selectIsOpen, selectLocale } =
+  useLocal();
 
 const menuOpen = ref(false);
 const toggleMenu = () => {

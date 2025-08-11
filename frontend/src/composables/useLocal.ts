@@ -14,14 +14,10 @@ export const useLocal = () => {
     selectIsOpen.value = false;
   };
 
-  const localeNameToUpperCase = (l: string) =>
-    l.charAt(0).toUpperCase() + l.slice(1);
-
   return {
     selectIsOpen,
     selectedLocale,
     availableLocales,
     selectLocale,
-    localeNameToUpperCase,
   };
 };

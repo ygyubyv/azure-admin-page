@@ -3,14 +3,14 @@
     <RouterLink
       :to="{ name: 'me' }"
       v-if="isAuthenticated"
-      class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
+      class="text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
       {{ $t("routes.me") }}
     </RouterLink>
 
     <RouterLink
       :to="{ name: 'users' }"
-      class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
+      class="text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
       {{ $t("routes.users") }}
     </RouterLink>
@@ -18,7 +18,7 @@
     <RouterLink
       :to="{ name: 'admin' }"
       v-if="isAdmin || isOwner"
-      class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
+      class="text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
       {{ $t("routes.admin") }}
     </RouterLink>
