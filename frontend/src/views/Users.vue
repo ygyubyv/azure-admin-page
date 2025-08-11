@@ -23,12 +23,15 @@
 import { ref, onMounted } from "vue";
 import { showNotification } from "@/helpers/showNotification";
 import type { UserOverall } from "@/types/UserOverall";
+import { useI18n } from "vue-i18n";
 import BaseSpinner from "@/components/Base/BaseSpinner.vue";
 import UserCard from "@/components/UsersView/UserCard.vue";
 
 interface ResponseData {
   users: UserOverall[];
 }
+
+const { t } = useI18n();
 
 const users = ref<UserOverall[]>([]);
 const isLoading = ref(false);
@@ -41,7 +44,7 @@ const fetchUsers = async () => {
     );
 
     if (!response.ok) {
-      showNotification("error", "Failed to fetch users");
+      showNotification("error", t("notifications.users.fetchError"));
       return;
     }
 
@@ -49,7 +52,7 @@ const fetchUsers = async () => {
     users.value = data.users;
   } catch (error) {
     console.error("Unexpected error:", error);
-    showNotification("error", "Unexpected error. Check console.");
+    showNotification("error", t("notifications.unexpectedError"));
   } finally {
     isLoading.value = false;
   }

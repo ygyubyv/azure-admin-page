@@ -2,11 +2,14 @@ import { computed, ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { showNotification } from "@/helpers/showNotification";
+import { useI18n } from "vue-i18n";
 import { showErrorCodeMessage } from "@/helpers/showErrorCodeMessage";
 import { parseRolesFromString, stringifyRoles } from "@/helpers/roleConverters";
 import type { User } from "@/types/User";
 
 export const useAdminPanel = (user: User) => {
+  const { t } = useI18n();
+
   const targetRolesArray = parseRolesFromString(user.role);
   const newRoles = ref([...targetRolesArray]);
 
@@ -26,7 +29,7 @@ export const useAdminPanel = (user: User) => {
 
   const onSubmit = async () => {
     if (!hasChanges.value) {
-      showNotification("warning", "No changes detected");
+      showNotification("warning", t("notifications.noChanges"));
       return;
     }
 
@@ -49,7 +52,7 @@ export const useAdminPanel = (user: User) => {
         return;
       }
 
-      showNotification("success", "Updated successfully");
+      showNotification("success", t("notifications.updateSuccess"));
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +71,7 @@ export const useAdminPanel = (user: User) => {
       );
 
       if (response.status === 204) {
-        showNotification("success", "Successfully deleted");
+        showNotification("success", t("notifications.deleteSuccess"));
         return;
       }
 

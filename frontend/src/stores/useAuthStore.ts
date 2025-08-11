@@ -3,9 +3,12 @@ import { defineStore } from "pinia";
 import { loginRequest, myMSALObj } from "@/azure/msalConfig";
 import { parseRolesFromString } from "@/helpers/roleConverters";
 import { showNotification } from "@/helpers/showNotification";
+import { useI18n } from "vue-i18n";
 import type { IdTokenClaimsExtended } from "@/types/IdTokenClaims";
 
 export const useAuthStore = defineStore("auth", () => {
+  const { t } = useI18n();
+
   const isAuthenticated = ref(false);
   const isInitialized = ref(false);
   const bearerToken = ref("");
@@ -36,7 +39,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
       await myMSALObj.loginRedirect(loginRequest);
     } catch (error) {
-      showNotification("error", "Login failed");
+      showNotification("error", t("notifications.auth.loginFailed"));
       console.error("Login error", error);
     }
   };
@@ -50,7 +53,7 @@ export const useAuthStore = defineStore("auth", () => {
       isInitialized.value = false;
       await myMSALObj.logoutRedirect();
     } catch (error) {
-      showNotification("error", "Logout failed");
+      showNotification("error", t("notifications.auth.logoutFailed"));
       console.error("Logout error", error);
     }
   };
@@ -73,7 +76,7 @@ export const useAuthStore = defineStore("auth", () => {
         isAuthenticated.value = false;
       }
     } catch (error) {
-      showNotification("error", "Authentication error, please try again");
+      showNotification("error", t("notifications.auth.authError"));
       console.error("Auth init error", error);
       isAuthenticated.value = false;
     }
@@ -86,7 +89,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const token = await getMsalToken();
     if (!token) {
-      showNotification("error", "Failed to get token");
+      showNotification("error", t("notifications.auth.tokenMissing"));
       return;
     }
 
@@ -101,7 +104,7 @@ export const useAuthStore = defineStore("auth", () => {
       const response = await myMSALObj.acquireTokenSilent(loginRequest);
       return response;
     } catch (error) {
-      showNotification("error", "Token acquisition failed");
+      showNotification("error", t("notifications.auth.tokenAcquisitionFailed"));
       console.error("Token error", error);
     }
   };

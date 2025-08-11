@@ -37,12 +37,14 @@ import BaseSpinner from "@/components/Base/BaseSpinner.vue";
 import UserCard from "@/components/AdminView/UserCard.vue";
 import { showErrorCodeMessage } from "@/helpers/showErrorCodeMessage";
 import { showNotification } from "@/helpers/showNotification";
+import { useI18n } from "vue-i18n";
 
 interface ResponseData {
   user: User;
 }
 
 const { bearerToken } = storeToRefs(useAuthStore());
+const { t } = useI18n();
 
 const searchId = ref("");
 const user = ref<User | null>(null);
@@ -81,7 +83,7 @@ const getUser = async (id: string) => {
     user.value = data.user;
   } catch (error) {
     console.error("Unexpected client-side error:", error);
-    showNotification("error", "Unexpected error. Please check the console.");
+    showNotification("error", t("notifications.unexpectedError"));
   } finally {
     isLoading.value = false;
   }

@@ -209,7 +209,24 @@
     "noChanges": "No changes detected",
     "updateSuccess": "Updated successfully",
     "deleteSuccess": "Successfully deleted",
-    "unexpectedError": "Unexpected error. Please check the console."
+    "unexpectedError": "Unexpected error. Please check the console.",
+    "errors": {
+      "400": "Bad request. Arguments are missing.",
+      "401": "Unauthorized. Please log in again.",
+      "403": "You don't have permission to perform this action.",
+      "404": "Resource not found.",
+      "500": "Server error. Please try again later."
+    },
+    "auth": {
+      "loginFailed": "Login failed",
+      "logoutFailed": "Logout failed",
+      "authError": "Authentication error, please try again",
+      "tokenMissing": "Failed to get token",
+      "tokenAcquisitionFailed": "Token acquisition failed"
+    },
+    "users": {
+      "fetchError": "Failed to fetch users"
+    }
   },
 
   "claim_explanations": {
