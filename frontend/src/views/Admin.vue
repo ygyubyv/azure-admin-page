@@ -79,8 +79,6 @@ const getUser = async (id: string) => {
 
     const data = (await response.json()) as ResponseData;
     user.value = data.user;
-
-    console.log(data.user);
   } catch (error) {
     console.error("Unexpected client-side error:", error);
     showNotification("error", "Unexpected error. Please check the console.");

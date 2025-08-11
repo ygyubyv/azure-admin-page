@@ -6,14 +6,16 @@
     <ol
       class="list-decimal list-inside space-y-2 text-[16px] md:text-base text-gray-700 leading-relaxed"
     >
-      <li>{{ $t("how_to_use.introduction.step1") }}</li>
-      <li>{{ $t("how_to_use.introduction.step2") }}</li>
-      <li>{{ $t("how_to_use.introduction.step3") }}</li>
-      <li>{{ $t("how_to_use.introduction.step4") }}</li>
+      <li v-for="(step, index) in steps" :key="index">{{ rt(step) }}</li>
     </ol>
   </BaseSection>
 </template>
 
 <script setup lang="ts">
 import BaseSection from "../Base/BaseSection.vue";
+import { useI18n } from "vue-i18n";
+
+const { rt, tm } = useI18n();
+
+const steps = tm("how_to_use.introduction.steps");
 </script>

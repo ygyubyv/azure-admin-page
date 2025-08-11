@@ -7,7 +7,7 @@ import Main from "../views/Main.vue";
 import Admin from "@/views/Admin.vue";
 import Users from "@/views/Users.vue";
 import Me from "@/views/Me.vue";
-import HowToUse from "@/components/HowToUse/HowToUse.vue";
+import HowToUse from "@/views/HowToUse.vue";
 
 export const isLoading = ref(false);
 

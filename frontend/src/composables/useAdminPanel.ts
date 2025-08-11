@@ -50,9 +50,6 @@ export const useAdminPanel = (user: User) => {
       }
 
       showNotification("success", "Updated successfully");
-
-      const result = await response.json();
-      console.log(`Response for ${user.id}:`, result);
     } catch (error) {
       console.error(error);
     }
