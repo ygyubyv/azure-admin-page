@@ -21,7 +21,7 @@
             :to="{ name: 'me' }"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
-            <span>Me</span>
+            <span>{{ $t("routes.me") }}</span>
             <font-awesome-icon :icon="['fas', 'address-card']" />
           </router-link>
 
@@ -30,7 +30,7 @@
             :to="{ name: 'users' }"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
-            <span>Users</span>
+            <span>{{ $t("routes.users") }}</span>
             <font-awesome-icon :icon="['fas', 'users']" />
           </router-link>
 
@@ -40,7 +40,7 @@
             v-if="isAdmin || isOwner"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
-            <span>Admin</span>
+            <span>{{ $t("routes.admin") }}</span>
             <font-awesome-icon :icon="['fas', 'user-tie']" />
           </router-link>
 
@@ -49,20 +49,43 @@
             :to="{ name: 'howToUse' }"
             class="flex items-center justify-between gap-2 hover:bg-white/10 px-3 py-2 rounded-md transition"
           >
-            <span>How to use</span>
+            <span>{{ $t("routes.how_to_use") }}</span>
             <font-awesome-icon :icon="['fas', 'lightbulb']" />
           </router-link>
 
+          <li class="relative">
+            <button
+              @click="selectIsOpen = !selectIsOpen"
+              class="flex items-center justify-between w-full px-3 py-2 rounded-md hover:bg-white/10 transition"
+            >
+              <span>{{ localeNameToUpperCase(selectedLocale) }}</span>
+              <font-awesome-icon :icon="['fas', 'chevron-down']" />
+            </button>
+            <div
+              v-if="selectIsOpen"
+              class="absolute right-0 mt-1 w-40 bg-white text-black rounded shadow-lg z-10"
+            >
+              <div
+                v-for="locale in availableLocales"
+                :key="locale"
+                @click="selectLocale(locale)"
+                class="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+              >
+                {{ localeNameToUpperCase(locale) }}
+              </div>
+            </div>
+          </li>
+
           <BaseBurgerButton
             :icon="['fas', 'right-to-bracket']"
-            text="Login"
+            :text="$t('routes.login')"
             :onClick="login"
             v-if="!isAuthenticated"
           />
 
           <BaseBurgerButton
             :icon="['fas', 'right-to-bracket']"
-            text="Logout"
+            :text="$t('routes.logout')"
             :onClick="logout"
             v-else
           />
@@ -75,11 +98,19 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/useAuthStore";
+import { useLocal } from "@/composables/useLocal";
 import { storeToRefs } from "pinia";
 import BaseBurgerButton from "../Base/BaseBurgerButton.vue";
 
 const { isAuthenticated, isAdmin, isOwner } = storeToRefs(useAuthStore());
 const { login, logout } = useAuthStore();
+const {
+  availableLocales,
+  selectedLocale,
+  selectIsOpen,
+  localeNameToUpperCase,
+  selectLocale,
+} = useLocal();
 
 const menuOpen = ref(false);
 const toggleMenu = () => {

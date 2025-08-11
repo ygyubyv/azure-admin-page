@@ -1,16 +1,21 @@
 <template>
   <div class="w-full max-w-3xl mx-auto my-10 space-y-6 px-4">
-    <h1 class="text-2xl font-bold text-gray-800">Latest Registered Users</h1>
+    <h1 class="text-2xl font-bold text-gray-800">
+      {{ $t("users_view.title") }}
+    </h1>
 
     <div v-if="isLoading" class="py-20 text-center">
       <BaseSpinner mode="Black-spinner" />
+      <p class="mt-4 text-gray-700">{{ $t("users_view.loadingMessage") }}</p>
     </div>
 
     <template v-else-if="users.length">
       <UserCard v-for="user in users" :user="user" :key="user.id" />
     </template>
 
-    <div v-else class="text-center text-gray-500 py-10">No users found.</div>
+    <div v-else class="text-center text-gray-500 py-10">
+      {{ $t("users_view.noUsersMessage") }}
+    </div>
   </div>
 </template>
 

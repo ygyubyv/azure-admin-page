@@ -5,14 +5,14 @@
       v-if="isAuthenticated"
       class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
-      Me
+      {{ $t("routes.me") }}
     </RouterLink>
 
     <RouterLink
       :to="{ name: 'users' }"
       class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
-      Users
+      {{ $t("routes.users") }}
     </RouterLink>
 
     <RouterLink
@@ -20,22 +20,27 @@
       v-if="isAdmin || isOwner"
       class="text-lg text-gray-800 hover:text-gray-600 transition duration-200 px-4 py-1.5 rounded bg-gray-100 hover:shadow-sm hover:scale-102 transform"
     >
-      Admin
+      {{ $t("routes.admin") }}
     </RouterLink>
 
+    <LocaleSwitcher />
+
     <RouterLink :to="{ name: 'howToUse' }">
-      <BaseButton text="How to use" :icon="['fas', 'lightbulb']" />
+      <BaseButton
+        :text="$t('routes.how_to_use')"
+        :icon="['fas', 'lightbulb']"
+      />
     </RouterLink>
 
     <BaseButton
-      text="Login"
+      :text="$t('routes.login')"
       :icon="['fas', 'right-to-bracket']"
       :onClick="login"
       v-if="!isAuthenticated"
     />
 
     <BaseButton
-      text="Logout"
+      :text="$t('routes.logout')"
       :icon="['fas', 'right-to-bracket']"
       :onClick="logout"
       v-else
@@ -47,6 +52,7 @@
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
 import BaseButton from "../Base/BaseButton.vue";
+import LocaleSwitcher from "../LocaleSwitcher.vue";
 
 const authStore = useAuthStore();
 

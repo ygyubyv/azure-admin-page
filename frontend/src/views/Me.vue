@@ -4,6 +4,7 @@
   >
     <div v-if="!idTokenClaims">
       <BaseSpinner mode="Black-spinner" />
+      <p class="text-center mt-4 text-gray-700">{{ $t("me_view.loading") }}</p>
     </div>
 
     <ClaimsTable v-else :id-token-claims="idTokenClaims" />
@@ -13,7 +14,7 @@
         v-for="(value, key) in idTokenClaims"
         :claim="key"
         :value="value"
-        :description="CLAIM_EXPLANATIONS[key]"
+        :description="$t(`claim_explanations.${key}`)"
       />
     </div>
 
@@ -25,7 +26,6 @@
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { CLAIM_EXPLANATIONS } from "@/data/claimExplanations";
 import ClaimsTable from "@/components/MeView/ClaimsTable.vue";
 import MobileLabelsBlock from "@/components/MeView/MobileLabelsBlock.vue";
 import BaseSpinner from "@/components/Base/BaseSpinner.vue";

@@ -16,6 +16,7 @@ import {
   faSearch,
   faUsers,
   faAddressCard,
+  faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -35,7 +36,8 @@ library.add(
   faUserShield,
   faSearch,
   faUsers,
-  faAddressCard
+  faAddressCard,
+  faChevronDown
 );
 
 export { FontAwesomeIcon };

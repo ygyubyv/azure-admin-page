@@ -9,3 +9,8 @@ export const demoUserCredentials = {
   email: import.meta.env.VITE_DEMO_USER_CREDENTIALS_EMAIL,
   password: import.meta.env.VITE_DEMO_USER_CREDENTIALS_PASSWORD,
 };
+
+export const localeConfig = {
+  defaultLocale: import.meta.env.VITE_DEFAULT_LOCALE!,
+  fallbackLocale: import.meta.env.VITE_FALLBACK_LOCALE!,
+};

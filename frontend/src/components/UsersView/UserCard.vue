@@ -2,16 +2,24 @@
   <div
     class="bg-white border border-gray-300 rounded-xl shadow-md p-4 sm:p-6 space-y-6"
   >
-    <h3 class="text-xl font-bold text-gray-800 mb-4">User Details</h3>
+    <h3 class="text-xl font-bold text-gray-800 mb-4">
+      {{ $t("users_view.userDetailsTitle") }}
+    </h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-      <InfoItem label="ID" :value="user.id" />
-      <InfoItem label="Display Name" :value="user.displayName" />
+      <InfoItem :label="$t('users_view.labels.id')" :value="user.id" />
+      <InfoItem
+        :label="$t('users_view.labels.displayName')"
+        :value="user.displayName"
+      />
       <InfoItem
         v-if="user.createdDateTime"
-        label="Created"
+        :label="$t('users_view.labels.created')"
         :value="normalizeDate(user.createdDateTime)"
       />
-      <InfoItem label="Role" :value="user.role || 'Not provided'" />
+      <InfoItem
+        :label="$t('users_view.labels.role')"
+        :value="user.role || $t('users_view.labels.roleNotProvided')"
+      />
     </div>
   </div>
 </template>

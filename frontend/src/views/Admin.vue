@@ -4,11 +4,11 @@
       <input
         v-model="searchId"
         type="text"
-        placeholder="Enter user ID"
+        :placeholder="$t('user_search.placeholder')"
         class="w-full max-w-xs sm:max-w-full rounded-md border border-gray-300 px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent text-sm sm:text-base"
       />
       <BaseButton
-        text="Search"
+        :text="$t('user_search.searchButton')"
         size="small"
         :icon="['fas', 'search']"
         @click="searchUser"
@@ -16,7 +16,7 @@
     </div>
 
     <div v-if="!user && !isLoading" class="text-gray-500 text-center py-10">
-      No user selected
+      {{ $t("user_search.noUserSelected") }}
     </div>
 
     <div v-if="isLoading" class="text-center py-10">
@@ -79,6 +79,8 @@ const getUser = async (id: string) => {
 
     const data = (await response.json()) as ResponseData;
     user.value = data.user;
+
+    console.log(data.user);
   } catch (error) {
     console.error("Unexpected client-side error:", error);
     showNotification("error", "Unexpected error. Please check the console.");

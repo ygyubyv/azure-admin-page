@@ -1,33 +1,35 @@
 <template>
   <BaseSection>
     <h2 class="text-xl font-semibold text-gray-900 mb-4">
-      3. Approaches to RBAC
+      {{ $t("how_to_use.rbac_comparison.title") }}
     </h2>
 
     <p class="text-gray-700 mb-6 max-w-3xl">
-      There are two general approaches for implementing Role-Based Access
-      Control (RBAC) in modern web apps. Below is a comparison between
-      integrating with Azure Entra (Microsoft Graph) and using a custom role
-      management system based on an external database.
+      {{ $t("how_to_use.rbac_comparison.description") }}
     </p>
 
     <div class="space-y-10">
       <ApproachCard
-        v-for="(approach, index) in rbacApproaches"
+        v-for="(approach, index) in approaches"
         :key="index"
-        :title="approach.title"
-        :description="approach.description"
-        :pros="approach.pros"
-        :cons="approach.cons"
-        :when-to-use="approach.whenToUse"
+        :title="rt(approach.title)"
+        :description="rt(approach.description)"
+        :pros="approach.pros.map((p: string) => rt(p))"
+        :cons="approach.cons.map((c: string) => rt(c))"
+        :when-to-use="approach.whenToUse.map((w: string) => rt(w))"
       />
     </div>
   </BaseSection>
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import BaseSection from "../Base/BaseSection.vue";
 import ApproachCard from "./ApproachCard.vue";
 
-import { rbacApproaches } from "@/data/RbacApproaches";
+import { useI18n } from "vue-i18n";
+
+const { tm, rt } = useI18n();
+
+const approaches = computed(() => tm("how_to_use.rbac_comparison.approaches"));
 </script>

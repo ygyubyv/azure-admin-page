@@ -1,15 +1,19 @@
 <template>
   <div>
-    <h2 class="text-2xl font-semibold mb-4 text-gray-800">ID Token Claims</h2>
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800">
+      {{ $t("me_view.idTokenClaimsTitle") }}
+    </h2>
 
     <table
       class="hidden md:table w-full text-left border border-gray-300 rounded overflow-hidden"
     >
       <thead class="bg-gray-100 text-sm text-gray-600">
         <tr>
-          <th class="px-4 py-2 border-b">Claim</th>
-          <th class="px-4 py-2 border-b">Value</th>
-          <th class="px-4 py-2 border-b">Description</th>
+          <th class="px-4 py-2 border-b">{{ $t("me_view.claimLabel") }}</th>
+          <th class="px-4 py-2 border-b">{{ $t("me_view.valueLabel") }}</th>
+          <th class="px-4 py-2 border-b">
+            {{ $t("me_view.descriptionLabel") }}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -17,7 +21,7 @@
           v-for="(value, key) in idTokenClaims"
           :claim="key"
           :value="value"
-          :description="CLAIM_EXPLANATIONS[key]"
+          :description="$t(`claim_explanations.${key}`)"
         />
       </tbody>
     </table>
@@ -25,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { CLAIM_EXPLANATIONS } from "@/data/claimExplanations";
 import type { IdTokenClaimsExtended } from "@/types/IdTokenClaims";
 import Claim from "./Claim.vue";
 

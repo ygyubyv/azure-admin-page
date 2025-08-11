@@ -5,14 +5,11 @@
     </h2>
 
     <p class="text-[16px] md:text-base">
-      A web application for managing roles of authorized users using Microsoft
-      Graph (v1) or MongoDB (v2).
+      {{ $t("main_view.introduction.description") }}
     </p>
 
     <p class="text-[16px] md:text-base">
-      The application allows you to view a list of authorized users, manage
-      their roles, and remove users. It focuses on security, scalability, and
-      clear access control separation.
+      {{ $t("main_view.introduction.details") }}
     </p>
   </BaseSection>
 </template>

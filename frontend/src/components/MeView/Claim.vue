@@ -3,7 +3,7 @@
     <td class="px-4 py-2 font-medium border-b">{{ claim }}</td>
     <td class="px-4 py-2 border-b break-all">{{ value }}</td>
     <td class="px-4 py-2 border-b text-gray-500 italic">
-      {{ description || "—" }}
+      {{ description || $t("me_view.noDescription") }}
     </td>
   </tr>
 </template>

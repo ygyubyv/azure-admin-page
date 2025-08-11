@@ -7,6 +7,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 interface Props {
   label: string;
@@ -14,6 +15,9 @@ interface Props {
 }
 
 const { value } = defineProps<Props>();
+const { t } = useI18n();
 
-const formattedValue = computed(() => (value ? value : "Not provided"));
+const formattedValue = computed(() =>
+  value ? value : t("user_card.not_provided")
+);
 </script>
