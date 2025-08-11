@@ -4,7 +4,7 @@ import { loginRequest, myMSALObj } from "@/azure/msalConfig";
 import { parseRolesFromString } from "@/helpers/roleConverters";
 import { showNotification } from "@/helpers/showNotification";
 import { useI18n } from "vue-i18n";
-import type { IdTokenClaimsExtended } from "@/types/IdTokenClaims";
+import type { IdTokenClaimsExtended } from "@/types/IdTokenClaimsExtended";
 
 export const useAuthStore = defineStore("auth", () => {
   const { t } = useI18n();

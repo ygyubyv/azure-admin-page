@@ -3,49 +3,17 @@ import { createRouter, createWebHistory } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "@/stores/useAuthStore";
 
-import Main from "../views/Main.vue";
-import Admin from "@/views/Admin.vue";
-import Users from "@/views/Users.vue";
-import Me from "@/views/Me.vue";
-import HowToUse from "@/views/HowToUse.vue";
+import main from "@/containers/main/routes";
+import me from "@/containers/me/routes";
+import users from "@/containers/users/routes";
+import howToUse from "@/containers/how-to-use/routes";
+import admin from "@/containers/admin/routes";
 
 export const isLoading = ref(false);
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/",
-      name: "main",
-      component: Main,
-    },
-    {
-      path: "/how-to-use",
-      name: "howToUse",
-      component: HowToUse,
-    },
-    {
-      path: "/users",
-      name: "users",
-      component: Users,
-    },
-    {
-      path: "/me",
-      name: "me",
-      component: Me,
-      meta: {
-        requiresAuth: true,
-      },
-    },
-    {
-      path: "/admin",
-      name: "admin",
-      component: Admin,
-      meta: {
-        requiresAdmin: true,
-      },
-    },
-  ],
+  routes: [...main, ...me, ...users, ...howToUse, ...admin],
 });
 
 router.beforeEach(async (to, _, next) => {
