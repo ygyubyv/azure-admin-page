@@ -1,5 +1,44 @@
 <template>
+  <BaseModal
+    v-if="deleteUserModalIsVisible"
+    @close="deleteUserModalIsVisible = !deleteUserModalIsVisible"
+  >
+    <template #header>
+      <div class="flex items-center gap-2">
+        <font-awesome-icon
+          :icon="['fas', 'triangle-exclamation']"
+          class="text-red-500 text-lg"
+        />
+        <h2 class="text-lg font-semibold text-gray-900">
+          {{ $t("modals.delete_user.title") }}
+        </h2>
+      </div>
+    </template>
+
+    <template #default>
+      <p>
+        {{ $t("modals.delete_user.text") }}
+      </p>
+    </template>
+
+    <template #actions>
+      <BaseButton
+        :text="$t('user_card.yes')"
+        :icon="['fas', 'check']"
+        size="medium"
+        :onClick="onDelete"
+      />
+      <BaseButton
+        :text="$t('user_card.no')"
+        :icon="['fas', 'xmark']"
+        size="medium"
+        :onClick="() => (deleteUserModalIsVisible = false)"
+      />
+    </template>
+  </BaseModal>
+
   <div
+    v-else
     class="bg-white border border-gray-300 rounded-xl shadow-md p-4 sm:p-6 space-y-6"
   >
     <div>
@@ -94,7 +133,11 @@
         :text="$t('user_card.buttons.delete')"
         :icon="['fas', 'trash']"
         size="small"
-        :onClick="onDelete"
+        :onClick="
+          () => {
+            deleteUserModalIsVisible = true;
+          }
+        "
       />
     </div>
   </div>
@@ -110,6 +153,7 @@ import { parseRolesFromString } from "@/helpers/roleConverters";
 import { showErrorCodeMessage } from "@/helpers/showErrorCodeMessage";
 import type { User } from "@/types/User";
 import BaseButton from "@/components/Base/BaseButton.vue";
+import BaseModal from "@/components/Base/BaseModal.vue";
 import BaseCheckbox from "@/components/Base/BaseCheckbox.vue";
 import InfoItem from "@/components/InfoItem.vue";
 
@@ -123,6 +167,8 @@ const { t } = useI18n();
 
 const targetRolesArray = parseRolesFromString(user.role);
 const newRoles = ref([...targetRolesArray]);
+
+const deleteUserModalIsVisible = ref(false);
 
 const isUser = computed(() => {
   return user.role.includes("user");
@@ -158,6 +204,8 @@ const onSubmit = async () => {
 
 const onDelete = async () => {
   try {
+    deleteUserModalIsVisible.value = false;
+
     const status = await deleteUser(user.id);
 
     if (status !== 204) {
