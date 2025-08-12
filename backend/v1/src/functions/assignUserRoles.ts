@@ -9,9 +9,10 @@ import { getRolesFromToken } from "../auth/jwt/getRolesFromToken";
 import { rolePermissions } from "../data/rolePermissions";
 import { parseRolesFromString } from "../utils/roleConverters";
 import { updateUserRoles } from "../graphApi/updateUserRoles";
+import { getUserById } from "../graphApi/getUserById";
 
 interface assignUserRolesRequestBody {
-  targetUserRoles: string;
+  newRoles: string;
 }
 
 export const assignUserRolesHandler = async (
@@ -42,12 +43,15 @@ export const assignUserRolesHandler = async (
 
   try {
     const body = (await request.json()) as assignUserRolesRequestBody;
+
     const targetUserId = request.params.id;
-    const { targetUserRoles } = body;
+    const targetUser = await getUserById(targetUserId);
+
+    const { newRoles } = body;
 
     const allowedRoles = rolePermissions[isOwner ? "owner" : "admin"];
 
-    const isAllowed = parseRolesFromString(targetUserRoles).every((role) =>
+    const isAllowed = parseRolesFromString(targetUser.role).every((role) =>
       allowedRoles.includes(role)
     );
 
@@ -58,7 +62,7 @@ export const assignUserRolesHandler = async (
       };
     }
 
-    await updateUserRoles(targetUserId, targetUserRoles);
+    await updateUserRoles(targetUserId, newRoles);
 
     return {
       status: 200,

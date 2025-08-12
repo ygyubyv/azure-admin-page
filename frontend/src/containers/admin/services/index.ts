@@ -39,7 +39,7 @@ export const editUserRoles = async (id: string, roles: string[]) => {
       Authorization: `Bearer ${bearerToken.value}`,
     },
     body: JSON.stringify({
-      targetUserRoles: stringifyRoles(roles),
+      newRoles: stringifyRoles(roles),
     }),
   });
 
