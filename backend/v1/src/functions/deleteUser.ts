@@ -6,6 +6,9 @@ import {
 } from "@azure/functions";
 import { deleteUserById } from "../graphApi/deleteUserById";
 import { getRolesFromToken } from "../auth/jwt/getRolesFromToken";
+import { getUserById } from "../graphApi/getUserById";
+import { rolePermissions } from "../data/rolePermissions";
+import { parseRolesFromString } from "../utils/roleConverters";
 
 export const deleteUserHandler = async (
   request: HttpRequest,
@@ -42,6 +45,21 @@ export const deleteUserHandler = async (
   }
 
   try {
+    const targetUser = await getUserById(userId);
+
+    const allowedRoles = rolePermissions[isOwner ? "owner" : "admin"];
+
+    const isAllowed = parseRolesFromString(targetUser.role).every((role) =>
+      allowedRoles.includes(role)
+    );
+
+    if (!isAllowed) {
+      return {
+        status: 403,
+        jsonBody: { error: "You cannot assign some of these roles" },
+      };
+    }
+
     await deleteUserById(userId);
 
     return {
