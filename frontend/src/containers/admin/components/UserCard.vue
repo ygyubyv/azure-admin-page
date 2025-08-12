@@ -7,7 +7,7 @@
       <div class="flex items-center gap-2">
         <font-awesome-icon
           :icon="['fas', 'triangle-exclamation']"
-          class="text-red-500 text-lg"
+          class="text-gray-800 text-lg mt-0.5"
         />
         <h2 class="text-lg font-semibold text-gray-900">
           {{ $t("modals.delete_user.title") }}
