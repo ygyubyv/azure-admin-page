@@ -38,7 +38,7 @@
 
 ---
 
-## ☁Infrastructure
+## Infrastructure
 
 - **Azure Static Web Apps**  
   - CI/CD pipeline via GitHub Actions  
@@ -51,4 +51,5 @@
   - Stores user role metadata and synchronization data  
 
 ---
+
 
